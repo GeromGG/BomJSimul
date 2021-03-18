@@ -1,7 +1,9 @@
 ﻿namespace BomJSimul.Render
 {
     using System.Reflection;
+    using BomJSimul.Gui;
     using BomJSimul.Gui.Sad;
+    using BomJSimul.Gui.Sad.Themes;
     using Microsoft.Xna.Framework;
     using SadConsole;
 
@@ -24,7 +26,12 @@
             var headerMenuHeight = 1;
             var footerMenuHeight = 1;
 
+            // Set theme styles
+            SadConsole.Themes.Library.Default.SetControlTheme(typeof(MenuItem), new MenuItemGenericTheme());
+            SadConsole.Themes.Library.Default.ControlsConsoleTheme = new GameViewHostConsoleTheme();
+
             var mainScreen = new Console(screenWidth, screenHeight);
+
             mainScreen.Fill(new Rectangle(new Point(0, 0), new Point(screenWidth, screenHeight)), Color.White, Color.DarkBlue, 0);
 
             var graphicsView = new GameGraphicsView(mainScreen, $"Симулятор Бомжа v{version}", screenWidth * 2 / 3, screenHeight * 3 / 4 - headerMenuHeight);
@@ -39,18 +46,19 @@
             graphicsView.Position = new Point(0, 0 + headerMenuHeight);
             infoView.Position = new Point(graphicsView.Position.X + graphicsView.Width + infoViewOffsetX, 0 + headerMenuHeight);
             logView.Position = new Point(0, graphicsView.Position.Y + graphicsView.Height + logViewOffsetY);
-            
+
             // menus
             var topMenu = new HeaderMenuView(mainScreen, headerMenuHeight);
-            topMenu.Add(new MenuItem("Игра"));
-            topMenu.Add(new MenuItem("Настройки"));
-            topMenu.Add(new MenuItem("О программе"));
-            topMenu.DrawMenu();
+            topMenu.AddMenu(new MenuItem("Игра", SizeToContent.Stretch));
+            topMenu.AddMenu(new MenuItem("Настройки", SizeToContent.Stretch));
+            topMenu.AddMenu(new MenuItem("О программе", SizeToContent.Stretch));
 
-            var footerMenuView = new FooterMenuView(mainScreen, footerMenuHeight);
-            footerMenuView.Position = new Point(0, screenHeight - footerMenuHeight);
-
-
+            var footerMenu = new FooterMenuView(mainScreen, footerMenuHeight);
+            footerMenu.Position = new Point(0, screenHeight - footerMenuHeight);
+            footerMenu.AddMenu(new MenuItem("F1 Помощь", SizeToContent.Stretch));
+            footerMenu.AddMenu(new MenuItem("F2 Загрузить", SizeToContent.Stretch));
+            footerMenu.AddMenu(new MenuItem("F3 Сохранить", SizeToContent.Stretch));
+            footerMenu.AddMenu(new MenuItem("Q Выход", SizeToContent.Stretch));
 
             return mainScreen;
         }

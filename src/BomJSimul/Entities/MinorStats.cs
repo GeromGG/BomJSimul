@@ -1,15 +1,12 @@
 ﻿namespace BomJSimul.Entities
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Text;
 
     internal class MinorStats : INotifyPropertyChanged
     {
         private int level;
 
-        public MinorStats() 
+        public MinorStats()
         {
         }
 
@@ -28,7 +25,7 @@
         /// <summary>
         /// Уровень вкачености.
         /// </summary>
-        public int Level 
+        public int Level
         {
             get
             {

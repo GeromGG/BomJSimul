@@ -4,33 +4,71 @@
     {
         public Item()
         {
+
         }
 
-        public Item(string name, int count, int strength, Rarity rarity, int dropChance) 
+        public Item(Item item)
+        {
+            Name = item.Name;
+            Count = item.Count;
+            Strength = item.Strength;
+            Rarity = item.Rarity;
+            DropChance = item.DropChance;
+            Cost = item.Count;
+        }
+
+        public Item(string name, int count, Rarity rarity, int dropChance, int cost, int strength = 100)
         {
             Name = name;
             Count = count;
             Strength = strength;
             Rarity = rarity;
             DropChance = dropChance;
+            Cost = cost;
         }
 
+        /// <summary>
+        /// Имя предмета.
+        /// </summary>
+        public string Name { get; set; }
 
-        public string Name { get; set; } // Имя предмета
+        /// <summary>
+        /// Количество (по умолчанию 1).
+        /// </summary>
+        public int Count { get; set; } = 1;
 
-        public int Count { get; set; } = 1; // Количество (по умолчанию 1)
+        /// <summary>
+        /// Прочность.
+        /// </summary>
+        public int Strength { get; set; }
 
-        public int Strength { get; set; } // Прочность
+        /// <summary>
+        /// Группы редкости.
+        /// </summary>
+        public Rarity Rarity { get; set; }
 
-        public Rarity Rarity { get; set; } // Групы редкости
+        /// <summary>
+        /// Шанс выпадения.
+        /// </summary>
+        public int DropChance { get; set; }
 
-        public int DropChance { get; set; }// Шанс выпадения
+        /// <summary>
+        /// Цена предмета.
+        /// </summary>
+        public int Cost { get; set; }
 
         public override string ToString()
         {
             var s = $"{Name} [Количество: {Count}] [{Rarity}]";
             return s;
         }
+
+        public Item Clone(Item item)
+        {
+            return new Item(item);
+        }
+        
+
     }
 
     internal enum Rarity

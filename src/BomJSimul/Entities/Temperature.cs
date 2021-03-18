@@ -1,15 +1,11 @@
 ﻿namespace BomJSimul.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    class Temperature
+    internal class Temperature
     {
         /// <summary>
         /// Температура окружающей среды в градусах целсия (по умолчанию 20 градусов).
         /// </summary>
-        public int C { get; set; } = 20; 
+        public int C { get; set; } = 20;
 
     }
 

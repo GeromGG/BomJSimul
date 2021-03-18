@@ -1,11 +1,10 @@
 ﻿namespace BomJSimul.Gui.Sad
 {
     using System.Collections.ObjectModel;
-    using System.Text;
     using Microsoft.Xna.Framework;
     using SadConsole;
 
-    internal class HeaderMenuView : Console
+    internal class HeaderMenuView : ControlsConsole
     {
         private readonly ObservableCollection<MenuItem> _menuItems;
 
@@ -17,13 +16,11 @@
             this.Fill(Color.White, Color.DarkGray, 0);
 
             _menuItems = new ObservableCollection<MenuItem>();
-
-            DrawMenu();
         }
 
         public ObservableCollection<MenuItem> Items => _menuItems;
 
-        public void Add(MenuItem menuItem)
+        public void AddMenu(MenuItem menuItem)
         {
             Items.Add(menuItem);
         }
@@ -31,17 +28,32 @@
         /// <summary>
         /// Draws menu items.
         /// </summary>
-        public void DrawMenu()
+        public void AttachMenu()
         {
-            var sb = new StringBuilder();
+            if (_menuItems is null || _menuItems.Count == 0)
+            {
+                return;
+            }
 
             for (int i = 0; i < _menuItems.Count; i++)
             {
-                sb.Append(_menuItems[i].Name);
-                sb.Append("     "); // 5 spaces
-            }
+                var currentMenu = _menuItems[i];
 
-            Print(1, 0, sb.ToString());
+                if (i > 0)
+                {
+                    var previousMenu = _menuItems[i - 1];
+                    currentMenu.Position = new Point(previousMenu.Position.X + previousMenu.Surface.Width + 1, 0);
+                }
+
+                Add(currentMenu);
+            }
+        }
+
+        protected override void OnInvalidate()
+        {
+            RemoveAll();
+            AttachMenu();
+            base.OnInvalidate();
         }
     }
 }

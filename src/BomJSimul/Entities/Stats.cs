@@ -1,10 +1,6 @@
 ﻿namespace BomJSimul.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    internal class Stats
+    public class Stats
     {
         public Stats()
         {
@@ -20,7 +16,13 @@
 
         public string Name { get; set; } // Имя стата
 
-        public int Level { get; set; } // Уровень вкачености
+        public int Level { get; private set; } // Уровень вкачености
+
+
+        public int Update(int value)
+        {
+            return Level += value;
+        }
 
     }
 }
